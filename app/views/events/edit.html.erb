@@ -1,0 +1,45 @@
+<div class="contents">
+    <div class="titleposi">
+        <h1>New event</h1>
+    </div>
+    <br>
+    <br>
+    <%= form_for(@event, url: {action: :update }) do |f| %>
+    
+    
+    <!--もし@postにエラーがあったら-->
+    <% if @event.errors.any? %>
+    <!--順序無しリスト-->
+    <ul>
+        <!--エラーの数だけループ-->
+        <% @event.errors.full_messages.each do |msg| %>
+        <!--メッセージの内容を表示   -->
+        <li>
+            <%= msg %>
+        </li>
+        <% end %>
+    </ul>
+    <% end %>
+
+    <!--titleに対するテキストフィールド-->
+    <div class="field">
+        <!--titleに対するテキストフィールド-->
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+    </div>
+    <br>
+    <!--contentに対するテキストエリア（５行分）-->
+    <div class="field">
+        <%= f.label :content %>
+        <%= f.text_area :content, :rows => 5 %>
+    </div>
+    <br>
+    <!--送信ボタン（createメソッドへ）-->
+    <div class="actions">
+        <%= f.submit %>
+    </div>
+<br>
+<% end %>
+<% e = @event %>
+<%= link_to 'Delete', "/events/#{e.year}/#{e.month}/#{e.date}",  method: :delete , data: { confirm: 'Sure?' }  %>
+</div>

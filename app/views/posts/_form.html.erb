@@ -1,0 +1,36 @@
+<!--@postに対するフォーム-->
+<%= form_for(@post) do |f| %>
+
+    <!--もし@postにエラーがあったら-->
+    <% if @post.errors.any? %>
+    <!--順序無しリスト-->
+    <ul>
+        <!--エラーの数だけループ-->
+        <% @post.errors.full_messages.each do |msg| %>
+        <!--メッセージの内容を表示   -->
+        <li>
+            <%= msg %>
+        </li>
+        <% end %>
+    </ul>
+    <% end %>
+
+    <!--titleに対するテキストフィールド-->
+    <div class="field">
+        <!--titleに対するテキストフィールド-->
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+    </div>
+    <br />
+    <!--contentに対するテキストエリア（５行分）-->
+    <div class="field">
+        <%= f.label :content %>
+        <%= f.text_area :content, :rows => 5 %>
+    </div>
+    <br />
+    <!--送信ボタン（createメソッドへ）-->
+    <div class="actions">
+        <%= f.submit %>
+    </div>
+<br>
+<% end %>

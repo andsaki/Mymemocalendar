@@ -1,0 +1,61 @@
+<div class = "contents">
+<%# 一時通知メッセージ %>
+<div id="notice">
+    <%= notice %>
+</div>
+
+
+<%# ヘッダー %>
+<div class = "titleposi">
+    <h1>Memo</h1>
+</div>
+
+    <%# 順序無しリスト %>
+    <ul>
+        <%# ループ %>
+        <% @posts.each do |post| %>
+                <li>
+                    <%# 記事のタイトルにリンクを張ってリスト表示 %>
+                    <%= link_to post.title, post_path(post),class: "linkline" %>
+                    
+                </li>
+        <%# ループ終了 %>
+        <% end %>
+    </ul>
+    
+    <%# Newリンク %>
+<%= link_to 'add!', new_post_path , class: "linkline" %>
+</div>
+<br />
+<br />
+<div class="contents">
+    <div class="titleposi">
+        <h1>Schedule</h1>
+    </div>
+    <ul>
+        <%# ループ %>
+        <% @events.each do |event| %>
+                <li>
+                    <%# 記事のタイトルにリンクを張ってリスト表示 %>
+                    <p>
+                        <%= "#{event.year}年#{event.month}月#{event.date}" %>
+                    </p>
+                    <%= link_to event.title, "events/#{event.year}/#{event.month}/#{event.date}",class: "linkline" %>
+                    
+                </li>
+        <%# ループ終了 %>
+        <% end %>
+    </ul>
+<%= link_to 'add!', events_new_path , class: "linkline" %>
+<script>
+    $(function () {
+        //一定時間後に処理を行う（0.8秒後）
+        setTimeout(function () {
+            //noticeをゆっくりとフェードアウト
+            $('#notice').fadeOut("slow");
+        }, 800);
+
+        
+    });
+</script>
+</div>

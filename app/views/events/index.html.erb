@@ -1,0 +1,63 @@
+<div class = "calendarbody">
+    <% today = @day %>
+
+  <table align="center" frame="border" rules="all">
+    <caption>
+    <ul class = "menu">
+      <li><%= link_to "#{Date.today.months_ago(6).strftime('%-m')}月","-6",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.months_ago(5).strftime('%-m')}月","-5",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.months_ago(4).strftime('%-m')}月","-4",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.months_ago(3).strftime('%-m')}月","-3",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.months_ago(2).strftime('%-m')}月","-2",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.last_month.strftime('%-m')}月","-1",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.strftime('%-m')}月","0",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.next_month.strftime('%-m')}月","1",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.months_since(2).strftime('%-m')}月","2",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.months_since(3).strftime('%-m')}月","3",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.months_since(4).strftime('%-m')}月","4",class: "linkline"%></li>
+      <li><%= link_to "#{Date.today.months_since(5).strftime('%-m')}月","5",class: "linkline"%></li>
+    </ul>
+    <h1>
+        <%= today.strftime("%Y年%-m月") %>
+    </h1>
+    </caption>
+    <tr>
+      <th width="80" height="50" bgcolor="#ffe8ff"><font color="red">日</font></th>
+      <th width="80" height="50">月</th>
+      <th width="80" height="50">火</th>
+      <th width="80" height="50">水</th>
+      <th width="80" height="50">木</th>
+      <th width="80" height="50">金</th>
+      <th width="80" height="50" bgcolor="#afeeee"><font color="blue">土</font></th>
+    </tr>
+    <% month = today.strftime('%m')%>
+    <% d = today.at_beginning_of_month.at_beginning_of_week(:sunday)%>
+    <% 1.upto(6).each do|i|%>
+    <tr>
+        <% (d..d.end_of_week(:sunday)).each do|c|%>
+          <th width="80" height="50" align="left" valign="top">
+            <% y = c.strftime('%Y')%>
+            <% m = c.strftime('%m')%>
+            <% p = c.strftime('%d')%>
+            <% e = Event.find_by(year: y, month: m, date: p) %>
+            <% if e != nil then %>
+              <div class = "posi"><%="#{c.strftime('%-d')}"%></div>
+              <h3>
+              <%= link_to "#{e.title}", "#{y}/#{m}/#{p}",class:"linkline"%>
+              </h3>
+            <% else %>
+               <div class = "posi"><%="#{c.strftime('%-d')}"%></div>
+            <% end %>
+          </th>
+          
+        <% end %>
+    </tr>
+  <% d = d + 1.week %>
+  <% end %>
+</table>
+<br />
+<%= link_to "add event!", events_new_path ,class: "linkline"%>
+    
+
+    
+</div>

@@ -1,0 +1,86 @@
+<div class = "contents">
+<div class = "titleposi">
+    <h1>
+        <%= @post.title %>
+    </h1>
+</div>
+    
+
+<%# 記事の内容 %>
+<p>
+    <%= @post.content %>
+</p>
+<!--
+<%# ヘッダー（コメント） %>
+    <h2>Comments</h2>
+<%# 順序無しリスト %>
+<ul>
+    <%# コメントがあったら %>
+    <% if @post.comments.any? %>
+        <%# コメント数ループ %>
+        <% @post.comments.each do |comment| %>
+            <%# リストの内容 %>
+                <li id = "comment_<%= comment.id %>">
+                    <%# コメント本文 (by コメンター) %>
+                    <%= comment.body %> (by <%= comment.commenter %>)
+                    <%# コメント削除リンク %>
+                    <%= link_to "Delete", [comment.post, comment],
+                        # 実行するHTTPメソッド
+                        method: :delete,
+                        # 確認メッセージ 
+                        data: { confirm: 'Sure?' }
+                        # Ajaxを有効化（非同期処理）
+                        
+                        %>
+                        
+                </li>
+        <% end %>
+    <%# コメントが無かったら %>
+    <% else %>
+        <%# no comment yet. %>
+        <li>no comment yet.</li>
+    <% end %>
+</ul>
+
+<h2>Add a comment</h2>
+
+<%# @postに対するコメントフォーム %>
+<%= form_for([@post, @comment]) do |f| %>
+    <%# もし@commentにエラーがあったら %>
+    <% if @comment.errors.any? %>
+        <%# 順序無しリスト %>
+            <ul>
+                <%# エラーの数だけループ %>
+                <% @comment.errors.full_messages.each do |msg| %>
+                <%# メッセージの内容を表示 %>
+                <li>
+                    <%= msg %>
+                </li>
+                <% end %>
+            </ul>
+    <% end %>
+
+    <%# commenterに対するテキストフィールド %>
+    <div class="field">
+        <%# commenterに対するテキストフィールド %>
+        <%= f.label :commenter %>
+        <%= f.text_field :commenter %>
+    </div>
+
+    <%# bodyに対するテキストエリア（５行分） %>
+    <div class="field">
+        <%= f.label :body %>
+        <%= f.text_area :body, :rows => 5 %>
+    </div>
+
+    <%# 送信ボタン（createメソッドへ） %>
+    <div class="actions">
+        <%= f.submit %>
+    </div>
+
+<% end %>
+-->
+<%= link_to 'Edit', edit_post_path(@post) %>
+<%= link_to '戻る', posts_path %>
+
+</div>
